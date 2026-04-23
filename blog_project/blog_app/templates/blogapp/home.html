@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Blog Home</title>
+</head>
+<body>
+    <nav>
+        <a href="{% url 'create_post' %}">Create New Post</a>
+    </nav>
+    <hr>
+    <h1>Welcome to the Blog</h1>
+    {% for post in posts %}
+        <article>
+            <h2>{{ post.title }}</h2>
+            {% if post.image %}
+                <img src="{{ post.image.url }}" alt="{{ post.title }}" style="max-width: 300px; display: block; margin-bottom: 10px;">
+            {% endif %}
+            <p>{{ post.content }}</p>
+            <small>By {{ post.author.username }} on {{ post.created_at }}</small>
+        </article>
+    {% empty %}
+        <p>No posts yet.</p>
+    {% endfor %}
+</body>
+</html>

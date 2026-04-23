@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Create a New Post</title>
+</head>
+<body>
+    <nav>
+        <a href="{% url 'home' %}">Back to Home</a>
+    </nav>
+    <hr>
+    <h1>Create a New Post</h1>
+    <form method="POST" enctype="multipart/form-data">
+        {% csrf_token %}
+        {{ form.as_p }}
+        
+        <!-- Image Preview Placeholder -->
+        <img id="image-preview" alt="Image Preview" style="display: none; max-width: 300px; margin-bottom: 10px; border: 1px solid #ccc; padding: 5px;" />
+        <br>
+
+        <button type="submit">Submit Post</button>
+    </form>
+
+    <!-- JavaScript to handle the image preview -->
+    <script>
+        const imageInput = document.getElementById('id_image');
+        const imagePreview = document.getElementById('image-preview');
+
+        if (imageInput) {
+            imageInput.addEventListener('change', function() {
+                const file = this.files[0];
+                if (file) {
+                    const reader = new FileReader();
+                    reader.addEventListener('load', function() {
+                        imagePreview.setAttribute('src', this.result);
+                        imagePreview.style.display = 'block';
+                    });
+                    reader.readAsDataURL(file);
+                } else {
+                    imagePreview.style.display = 'none';
+                    imagePreview.setAttribute('src', '');
+                }
+            });
+        }
+    </script>
+</body>
+</html>
